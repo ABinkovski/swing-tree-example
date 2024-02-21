@@ -1,19 +1,13 @@
 package com.edu.infrastructure.ui;
 
-import javax.swing.*;
+import com.edu.infrastructure.ui.frame.MainAppFrame;
+
+import java.awt.*;
 
 public class SwingTreeApp {
 
-    public static void main(String[] args) {
-        final JFrame jFrame = new JFrame();
-
-        jFrame.add(new JScrollPane(new JTree()));
-
-        jFrame.pack();
-
-        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        jFrame.setVisible(true);
+    public static void main(final String[] args) {
+        EventQueue.invokeLater(() -> new MainAppFrame("Simple Tree"));
     }
 
 }

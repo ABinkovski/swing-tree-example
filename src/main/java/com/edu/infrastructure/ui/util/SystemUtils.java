@@ -1,4 +1,4 @@
-package com.edu.infrastructure.ui.utils;
+package com.edu.infrastructure.ui.util;
 
 import lombok.experimental.UtilityClass;
 

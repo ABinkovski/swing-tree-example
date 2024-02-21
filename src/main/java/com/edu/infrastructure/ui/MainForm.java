@@ -1,6 +1,6 @@
 package com.edu.infrastructure.ui;
 
-import com.edu.infrastructure.ui.utils.SimpleJFrame;
+import com.edu.infrastructure.ui.util.SimpleJFrame;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;

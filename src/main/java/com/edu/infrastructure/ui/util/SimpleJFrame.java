@@ -1,11 +1,11 @@
-package com.edu.infrastructure.ui.utils;
+package com.edu.infrastructure.ui.util;
 
 import lombok.Builder;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static com.edu.infrastructure.ui.utils.WindowUtils.fillInstance;
+import static com.edu.infrastructure.ui.util.WindowUtils.fillInstance;
 import static java.util.Objects.nonNull;
 
 @Builder
