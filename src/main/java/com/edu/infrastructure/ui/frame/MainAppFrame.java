@@ -1,5 +1,6 @@
 package com.edu.infrastructure.ui.frame;
 
+import com.edu.infrastructure.ui.util.JTreeUtils;
 import com.edu.infrastructure.ui.util.WindowUtils;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class MainAppFrame extends JFrame {
     public MainAppFrame(final String title) throws HeadlessException {
         super(title);
 
-        add(new JScrollPane(jTree = new JTree()), BorderLayout.CENTER);
+        add(new JScrollPane(jTree = initTree()), BorderLayout.CENTER);
 
         pack();
 
@@ -21,5 +22,13 @@ public class MainAppFrame extends JFrame {
         WindowUtils.centerTheFrame(this);
 
         setVisible(true);
+    }
+
+    private JTree initTree() {
+        final JTree tree = new JTree();
+
+        JTreeUtils.expand(tree);
+
+        return tree;
     }
 }
