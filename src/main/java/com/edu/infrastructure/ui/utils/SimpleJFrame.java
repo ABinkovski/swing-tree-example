@@ -50,8 +50,15 @@ public class SimpleJFrame extends JFrame {
 
     public static void createAndShowInstance(final Component... components) {
         EventQueue.invokeLater(() -> {
-            final SimpleJFrame frame = createInstance(components);
-            frame.setVisible(true);
+            createAndShowFrame(components);
         });
+    }
+
+    @SuppressWarnings("UnusedReturnValue")
+    public static SimpleJFrame createAndShowFrame(final Component... components) {
+        final SimpleJFrame frame = createInstance(components);
+        frame.setVisible(true);
+
+        return frame;
     }
 }
