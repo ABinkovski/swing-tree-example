@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 @Slf4j
+@Deprecated
 public class MainForm {
     public static void main(final String[] args) {
         log.info("Starting app...");
