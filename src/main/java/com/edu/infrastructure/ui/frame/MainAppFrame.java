@@ -10,10 +10,13 @@ public class MainAppFrame extends JFrame {
 
     final JTree jTree;
 
+    final JPanel actionPanel;
+
     public MainAppFrame(final String title) throws HeadlessException {
         super(title);
 
         add(new JScrollPane(jTree = initTree()), BorderLayout.CENTER);
+        add(actionPanel = initActionPanel(), BorderLayout.EAST);
 
         pack();
 
@@ -30,5 +33,9 @@ public class MainAppFrame extends JFrame {
         JTreeUtils.expand(tree);
 
         return tree;
+    }
+
+    private JPanel initActionPanel() {
+        return new JPanel();
     }
 }
