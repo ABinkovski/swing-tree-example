@@ -1,7 +1,8 @@
 package com.edu.infrastructure.ui.frame;
 
-import com.edu.infrastructure.ui.util.JTreeUtils;
+import com.edu.infrastructure.ui.model2.QuestionModel;
 import com.edu.infrastructure.ui.util.WindowUtils;
+import com.edu.testdata.TestDataUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,9 +29,11 @@ public class MainAppFrame extends JFrame {
     }
 
     private JTree initTree() {
-        final JTree tree = new JTree();
+        final QuestionModel questionModel = new QuestionModel();
+        questionModel.setRoot(TestDataUtils.getTestQuestionModel());
+        final JTree tree = new JTree(questionModel);
 
-        JTreeUtils.expand(tree);
+//        JTreeUtils.expand(tree);
 
         return tree;
     }

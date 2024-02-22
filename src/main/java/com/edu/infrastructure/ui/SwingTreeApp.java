@@ -7,7 +7,7 @@ import java.awt.*;
 public class SwingTreeApp {
 
     public static void main(final String[] args) {
-        EventQueue.invokeLater(() -> new MainAppFrame("Simple Tree"));
+        EventQueue.invokeLater(() -> new MainAppFrame("Question Builder App"));
     }
 
 }

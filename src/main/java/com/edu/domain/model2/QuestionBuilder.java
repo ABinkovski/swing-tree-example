@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public final class QuestionBuilder {
-    private List<Question> children;
+    private List<Question> questions;
     private String name;
     private String title;
     private Map<String, InputType> inputTypeMap;
@@ -16,8 +16,8 @@ public final class QuestionBuilder {
         return new QuestionBuilder();
     }
 
-    public QuestionBuilder children(List<Question> children) {
-        this.children = children;
+    public QuestionBuilder questions(List<Question> questions) {
+        this.questions = questions;
         return this;
     }
 
@@ -37,6 +37,6 @@ public final class QuestionBuilder {
     }
 
     public Question build() {
-        return new Question(name, title, inputTypeMap, children);
+        return new Question(name, title, inputTypeMap, questions);
     }
 }

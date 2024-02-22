@@ -2,17 +2,16 @@ package com.edu.domain.model2;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
 public class Question {
     private UUID id = UUID.randomUUID();
     private String name;
@@ -24,11 +23,23 @@ public class Question {
     public Question(final String name,
                     final String title,
                     final Map<String, InputType> inputTypeMap,
-                    final List<Question> children) {
+                    final List<Question> questions) {
         this.name = name;
         this.title = title;
-        this.inputTypeMap.putAll(inputTypeMap);
-        children.forEach(this::addQuestion);
+        populateInputTypeMap(inputTypeMap);
+        populateQuestions(questions);
+    }
+
+    public void populateQuestions(final List<Question> questions) {
+        if (Objects.nonNull(questions)) {
+            questions.forEach(this::addQuestion);
+        }
+    }
+
+    public void populateInputTypeMap(final Map<String, InputType> inputTypeMap) {
+        if (Objects.nonNull(inputTypeMap)) {
+            this.inputTypeMap.putAll(inputTypeMap);
+        }
     }
 
     public void addQuestion(final Question question) {
@@ -63,5 +74,14 @@ public class Question {
 
     public static QuestionBuilder builder() {
         return QuestionBuilder.aQuestion();
+    }
+
+    public String previewTitle() {
+        return String.format("%s: %s", name, title);
+    }
+
+    @Override
+    public String toString() {
+        return previewTitle();
     }
 }
