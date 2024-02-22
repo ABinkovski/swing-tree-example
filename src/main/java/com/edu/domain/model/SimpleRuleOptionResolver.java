@@ -1,11 +1,11 @@
-package com.edu.infrastructure.ui.model;
+package com.edu.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.edu.infrastructure.ui.model.RuleOptionType.SIMPLE_RULE;
+import static com.edu.domain.model.RuleOptionType.SIMPLE_RULE;
 
 @Setter
 @Getter

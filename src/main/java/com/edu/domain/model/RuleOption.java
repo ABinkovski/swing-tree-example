@@ -1,4 +1,4 @@
-package com.edu.infrastructure.ui.model;
+package com.edu.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
