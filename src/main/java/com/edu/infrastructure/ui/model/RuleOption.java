@@ -11,8 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RuleOption {
     private String option;
-    private String input;
     private int score;
-    private RuleOptionType type;
+    private RuleOptionResolver optionResolver;
 
 }
