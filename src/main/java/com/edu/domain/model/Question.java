@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Getter
 @Setter
@@ -22,6 +23,7 @@ public class Question {
     private Map<String, String> answers;
     private int score = 1;
     private List<RuleOption> options;
+    @Deprecated(forRemoval = true)
     private Question nextQuestion;
 
     public Question getQuestion(final int index) {
@@ -33,6 +35,17 @@ public class Question {
     }
 
     public int getNextQuestionSize() {
-        return Optional.ofNullable(options).map(List::size).filter(size -> size > 1).orElse(1);
+        return Optional.ofNullable(options).map(List::size).filter(size -> size > 0)
+                .orElseGet(() -> nonNull(nextQuestion) ? 1 : 0);
+    }
+
+    public int getIndexOfChild(final Question child) {
+        for (int i = 0; i < options.size(); i++) {
+            if (options.get(i).getOptionResolver().getNextQuestion().equals(child)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

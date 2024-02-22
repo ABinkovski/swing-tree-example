@@ -28,13 +28,13 @@ public class QuestionModel implements TreeModel {
     }
 
     @Override
-    public int getChildCount(Object parent) {
+    public int getChildCount(final Object parent) {
         return ((Question) parent).getNextQuestionSize();
     }
 
     @Override
-    public boolean isLeaf(Object node) {
-        return false;
+    public boolean isLeaf(final Object node) {
+        return ((Question) node).getNextQuestionSize() == 0;
     }
 
     @Override
@@ -43,8 +43,8 @@ public class QuestionModel implements TreeModel {
     }
 
     @Override
-    public int getIndexOfChild(Object parent, Object child) {
-        return 0;
+    public int getIndexOfChild(final Object parent, final Object child) {
+        return ((Question) parent).getIndexOfChild((Question) child);
     }
 
     @Override
