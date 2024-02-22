@@ -16,12 +16,23 @@ import java.util.UUID;
 public class Question {
     private UUID id = UUID.randomUUID();
     private String name;
+    private String title;
     private Map<String, InputType> inputTypeMap = new LinkedHashMap<>();
     private Map<UUID, Question> children = new LinkedHashMap<>();
     private String rule;
 
-    public Question(final String name) {
+    public Question(final String name,
+                    final String title,
+                    final Map<String, InputType> inputTypeMap,
+                    final List<Question> children) {
         this.name = name;
+        this.title = title;
+        this.inputTypeMap.putAll(inputTypeMap);
+        children.forEach(this::addQuestion);
+    }
+
+    public void addQuestion(final Question question) {
+        children.put(question.getId(), question);
     }
 
     public Question getChild(final int index) {
@@ -48,5 +59,9 @@ public class Question {
 
     private List<Question> getChildrenList() {
         return new ArrayList<>(children.values()); // TODO double check if order is kept properly
+    }
+
+    public static QuestionBuilder builder() {
+        return QuestionBuilder.aQuestion();
     }
 }
