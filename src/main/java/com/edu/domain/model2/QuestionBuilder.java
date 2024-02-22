@@ -1,7 +1,10 @@
 package com.edu.domain.model2;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Arrays.asList;
 
 public final class QuestionBuilder {
     private List<Question> questions;
@@ -18,6 +21,11 @@ public final class QuestionBuilder {
 
     public QuestionBuilder questions(List<Question> questions) {
         this.questions = questions;
+        return this;
+    }
+
+    public QuestionBuilder questions(Question... questions) {
+        this.questions = new ArrayList<>(asList(questions));
         return this;
     }
 
