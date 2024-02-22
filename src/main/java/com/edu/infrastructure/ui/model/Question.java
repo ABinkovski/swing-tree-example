@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Question {
     private String question;
+    private Map<String, String> answers;
     private int score = 1;
     private List<RuleOption> options;
     private Question nextQuestion;

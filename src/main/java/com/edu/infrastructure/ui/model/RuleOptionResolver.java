@@ -6,6 +6,8 @@ public interface RuleOptionResolver {
 
     RuleOptionType getRuleOptionType();
 
-    Question isApplicable(String... input);
+    boolean isApplicable(String... input);
+
+    Question getNextQuestion();
 
 }
