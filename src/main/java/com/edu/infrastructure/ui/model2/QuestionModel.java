@@ -8,12 +8,8 @@ import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
-import java.util.ArrayList;
-import java.util.Collections;
 
-import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
 @Slf4j
@@ -81,24 +77,6 @@ public class QuestionModel implements TreeModel {
         }
         return removed;
     }
-
-    public TreeNode[] getPathToRoot(final Question searchNode) {
-        final ArrayList<Question> objectPath = new ArrayList<>();
-
-        Question node = searchNode;
-
-        while (nonNull(node)) {
-            objectPath.add(node);
-            node = node.getParent();
-        }
-
-        Collections.reverse(objectPath);
-
-        log.debug("getPathToRoot for {}, found: {}", searchNode, objectPath);
-
-        return objectPath.toArray(TreeNode[]::new);
-    }
-
 
     protected void fireTreeStructureChanged(final Question parent) {
         log.debug("fireTreeStructureChanged for [{}]", parent.previewTitle());

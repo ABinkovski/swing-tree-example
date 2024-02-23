@@ -2,6 +2,7 @@ package com.edu.domain.model2;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 import static java.util.Objects.nonNull;
 
+@Slf4j
 @Getter
 @Setter
 public class Question implements TreeNode {
@@ -111,6 +113,23 @@ public class Question implements TreeNode {
 
     public boolean remove(final Question question) {
         return children.values().remove(question);
+    }
+
+    public TreeNode[] getPath() {
+        final ArrayList<Question> objectPath = new ArrayList<>();
+
+        Question node = this;
+
+        while (nonNull(node)) {
+            objectPath.add(node);
+            node = node.getParent();
+        }
+
+        Collections.reverse(objectPath);
+
+        log.debug("getPathToRoot for {}, found: {}", this, objectPath);
+
+        return objectPath.toArray(TreeNode[]::new);
     }
 
     @Override

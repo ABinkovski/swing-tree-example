@@ -108,7 +108,7 @@ public class QuestionActionListener implements ActionListener {
 
     private void expandToItem(final Question question) {
         final QuestionModel model = (QuestionModel) tree.getModel();
-        final TreeNode[] pathToRoot = model.getPathToRoot(question);
+        final TreeNode[] pathToRoot = question.getPath();
         final TreePath treePath = new TreePath(pathToRoot);
         tree.scrollPathToVisible(treePath);
         tree.setSelectionPath(treePath);

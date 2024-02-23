@@ -2,6 +2,7 @@ package com.edu.infrastructure.ui.frame;
 
 import com.edu.infrastructure.ui.model.QuestionActionListenerType;
 import com.edu.infrastructure.ui.model2.QuestionModel;
+import com.edu.infrastructure.ui.util.JTreeUtils;
 import com.edu.infrastructure.ui.util.QuestionFormUtils;
 import com.edu.infrastructure.ui.util.WindowUtils;
 import com.edu.testdata.TestDataUtils;
@@ -58,7 +59,7 @@ public class MainAppFrame extends JFrame {
         questionModel.setRoot(TestDataUtils.getTestQuestionModel());
         final JTree tree = new JTree(questionModel);
 
-//        JTreeUtils.expand(tree);
+        JTreeUtils.expand(tree);
 
         return tree;
     }
