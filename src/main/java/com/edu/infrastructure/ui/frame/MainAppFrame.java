@@ -1,6 +1,7 @@
 package com.edu.infrastructure.ui.frame;
 
 import com.edu.infrastructure.ui.model.QuestionActionListenerType;
+import com.edu.infrastructure.ui.model2.QueryTransferHandler;
 import com.edu.infrastructure.ui.model2.QuestionModel;
 import com.edu.infrastructure.ui.util.JTreeUtils;
 import com.edu.infrastructure.ui.util.QuestionFormUtils;
@@ -8,6 +9,7 @@ import com.edu.infrastructure.ui.util.WindowUtils;
 import com.edu.testdata.TestDataUtils;
 
 import javax.swing.*;
+import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
 import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_CHILD;
@@ -59,6 +61,8 @@ public class MainAppFrame extends JFrame {
         questionModel.setRoot(TestDataUtils.getTestQuestionModel());
         final JTree tree = new JTree(questionModel);
 
+        initDragAndDropCloner(tree);
+
         JTreeUtils.expand(tree);
 
         return tree;
@@ -66,5 +70,12 @@ public class MainAppFrame extends JFrame {
 
     private JPanel initActionPanel() {
         return new JPanel();
+    }
+
+    private void initDragAndDropCloner(final JTree tree) {
+        tree.setDragEnabled(true);
+        tree.setDropMode(DropMode.ON_OR_INSERT);
+        tree.setTransferHandler(new QueryTransferHandler());
+        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
     }
 }

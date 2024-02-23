@@ -3,6 +3,7 @@ package com.edu.domain.model2;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
@@ -127,7 +128,7 @@ public class Question implements TreeNode {
 
         Collections.reverse(objectPath);
 
-        log.debug("getPathToRoot for {}, found: {}", this, objectPath);
+        log.debug("getPathToRoot for {}, found: {}", this, StringUtils.join(objectPath, " -> "));
 
         return objectPath.toArray(TreeNode[]::new);
     }
