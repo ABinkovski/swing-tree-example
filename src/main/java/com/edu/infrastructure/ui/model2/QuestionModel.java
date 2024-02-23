@@ -2,6 +2,7 @@ package com.edu.infrastructure.ui.model2;
 
 import com.edu.domain.model2.Question;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.event.EventListenerList;
 import javax.swing.event.TreeModelEvent;
@@ -9,6 +10,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+@Slf4j
 @NoArgsConstructor
 public class QuestionModel implements TreeModel {
 
@@ -42,7 +44,7 @@ public class QuestionModel implements TreeModel {
 
     @Override
     public void valueForPathChanged(final TreePath path, final Object newValue) {
-        // TODO
+        fireTreeStructureChanged((Question) newValue);
     }
 
     @Override
@@ -75,6 +77,8 @@ public class QuestionModel implements TreeModel {
 
 
     protected void fireTreeStructureChanged(final Question parent) {
+        log.debug("fireTreeStructureChanged for [{}]", parent.previewTitle());
+
         final TreeModelEvent event = new TreeModelEvent(this, new Object[]{parent});
         for (final TreeModelListener listener : listenerList.getListeners(TreeModelListener.class)) {
             listener.treeStructureChanged(event);
