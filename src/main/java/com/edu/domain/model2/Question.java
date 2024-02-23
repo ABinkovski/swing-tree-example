@@ -10,8 +10,9 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
+
+import static java.util.Objects.nonNull;
 
 @Getter
 @Setter
@@ -38,13 +39,13 @@ public class Question implements TreeNode {
     }
 
     public void populateQuestions(final List<Question> questions) {
-        if (Objects.nonNull(questions)) {
+        if (nonNull(questions)) {
             questions.forEach(this::addQuestion);
         }
     }
 
     public void populateInputTypeMap(final Map<String, InputType> inputTypeMap) {
-        if (Objects.nonNull(inputTypeMap)) {
+        if (nonNull(inputTypeMap)) {
             this.inputTypeMap.putAll(inputTypeMap);
         }
     }

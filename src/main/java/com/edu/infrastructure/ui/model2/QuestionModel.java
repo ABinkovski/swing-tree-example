@@ -10,6 +10,11 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 @NoArgsConstructor
@@ -20,7 +25,8 @@ public class QuestionModel implements TreeModel {
 
     public void setRoot(final Object root) {
         this.root = (Question) root;
-        // TODO make tree updates
+        ofNullable(this.root)
+                .ifPresent(this::fireTreeStructureChanged);
     }
 
     @Override
@@ -77,8 +83,20 @@ public class QuestionModel implements TreeModel {
     }
 
     public TreeNode[] getPathToRoot(final Question searchNode) {
+        final ArrayList<Question> objectPath = new ArrayList<>();
 
-        throw new UnsupportedOperationException();
+        Question node = searchNode;
+
+        while (nonNull(node)) {
+            objectPath.add(node);
+            node = node.getParent();
+        }
+
+        Collections.reverse(objectPath);
+
+        log.debug("getPathToRoot for {}, found: {}", searchNode, objectPath);
+
+        return objectPath.toArray(TreeNode[]::new);
     }
 
 
