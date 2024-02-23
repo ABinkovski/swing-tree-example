@@ -80,12 +80,16 @@ public class Question {
         return String.format("%s: %s", name, title);
     }
 
-    public static Question createNew() {
-        return Question.builder().build();
+    public boolean delete(final Question question) {
+        return children.values().remove(question);
     }
 
     @Override
     public String toString() {
         return previewTitle();
+    }
+
+    public static Question createNew() {
+        return Question.builder().build();
     }
 }

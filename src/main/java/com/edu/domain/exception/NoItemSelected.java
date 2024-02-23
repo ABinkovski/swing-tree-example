@@ -1,7 +1,7 @@
 package com.edu.domain.exception;
 
 public class NoItemSelected extends Exception {
-    public NoItemSelected(final String message) {
-        super(message);
+    public NoItemSelected() {
+        super("You have to select an Item to continue");
     }
 }
