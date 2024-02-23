@@ -67,6 +67,7 @@ public class QuestionActionListener implements ActionListener {
         if (!model.removeChild(parent, selected)) {
             throw new ChildNotFoundException(parent, selected);
         }
+        expandToChild(parent);
     }
 
     private void addNewItem(final Question question) {
@@ -98,6 +99,11 @@ public class QuestionActionListener implements ActionListener {
         return (Question) Optional.ofNullable(tree.getSelectionModel().getSelectionPath())
                 .map(TreePath::getLastPathComponent)
                 .orElseThrow(NoItemSelected::new);
+    }
+
+    private void expandToChild(final Question parent) {
+        final Question question = parent.getChildCount() > 0 ? parent.getChild(0) : parent;
+        expandToItem(question);
     }
 
     private void expandToItem(final Question question) {
