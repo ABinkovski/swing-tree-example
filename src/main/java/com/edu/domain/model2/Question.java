@@ -80,6 +80,10 @@ public class Question {
         return String.format("%s: %s", name, title);
     }
 
+    public static Question createNew() {
+        return Question.builder().build();
+    }
+
     @Override
     public String toString() {
         return previewTitle();

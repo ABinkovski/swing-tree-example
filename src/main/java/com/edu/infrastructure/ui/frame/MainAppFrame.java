@@ -1,23 +1,34 @@
 package com.edu.infrastructure.ui.frame;
 
+import com.edu.infrastructure.ui.model.QuestionActionListenerType;
 import com.edu.infrastructure.ui.model2.QuestionModel;
+import com.edu.infrastructure.ui.util.QuestionFormUtils;
 import com.edu.infrastructure.ui.util.WindowUtils;
 import com.edu.testdata.TestDataUtils;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_CHILD;
+import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_SIBLING;
+import static com.edu.infrastructure.ui.model.QuestionActionListenerType.DELETE;
+
 public class MainAppFrame extends JFrame {
 
-    final JTree jTree;
+    private final JTree jTree;
 
-    final JPanel actionPanel;
+    private final JPanel actionPanel;
+
+    private JButton addChildButton;
+    private JButton addSiblingButton;
+    private JButton removeButton;
 
     public MainAppFrame(final String title) throws HeadlessException {
         super(title);
 
         add(new JScrollPane(jTree = initTree()), BorderLayout.CENTER);
         add(actionPanel = initActionPanel(), BorderLayout.EAST);
+        add(initButtons(), BorderLayout.SOUTH);
 
         pack();
 
@@ -26,6 +37,20 @@ public class MainAppFrame extends JFrame {
         WindowUtils.centerTheFrame(this);
 
         setVisible(true);
+    }
+
+    public JButton createButton(final QuestionActionListenerType type) {
+        return QuestionFormUtils.createButton(type, jTree);
+    }
+
+    private JPanel initButtons() {
+        final JPanel panel = new JPanel();
+
+        panel.add(addChildButton = createButton(ADD_CHILD));
+        panel.add(addSiblingButton = createButton(ADD_SIBLING));
+        panel.add(removeButton = createButton(DELETE));
+
+        return panel;
     }
 
     private JTree initTree() {
