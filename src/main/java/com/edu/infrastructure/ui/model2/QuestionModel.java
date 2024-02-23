@@ -4,6 +4,7 @@ import com.edu.domain.model2.Question;
 import lombok.NoArgsConstructor;
 
 import javax.swing.event.EventListenerList;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
@@ -41,7 +42,7 @@ public class QuestionModel implements TreeModel {
 
     @Override
     public void valueForPathChanged(final TreePath path, final Object newValue) {
-        // skip
+        // TODO
     }
 
     @Override
@@ -57,5 +58,18 @@ public class QuestionModel implements TreeModel {
     @Override
     public void removeTreeModelListener(final TreeModelListener l) {
         listenerList.remove(TreeModelListener.class, l);
+    }
+
+    public void addChild(final Question parent, final Question children) {
+        parent.addQuestion(children);
+        fireTreeStructureChanged(parent);
+    }
+
+
+    protected void fireTreeStructureChanged(final Question parent) {
+        final TreeModelEvent event = new TreeModelEvent(this, new Object[]{parent});
+        for (TreeModelListener listener : listenerList.getListeners(TreeModelListener.class)) {
+            listener.treeStructureChanged(event);
+        }
     }
 }

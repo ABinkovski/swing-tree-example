@@ -4,7 +4,9 @@ import com.edu.domain.exception.ChildNotFoundException;
 import com.edu.domain.exception.ItemIsParent;
 import com.edu.domain.exception.NoItemSelected;
 import com.edu.domain.model2.Question;
+import com.edu.infrastructure.ui.model2.QuestionModel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
+@Slf4j
 @RequiredArgsConstructor
 public class QuestionActionListener implements ActionListener {
 
@@ -44,16 +47,19 @@ public class QuestionActionListener implements ActionListener {
     }
 
     private void addNewChild() throws NoItemSelected {
+        log.debug("Adding new child");
         final Question selected = getSelected();
         addNewItem(selected);
     }
 
     private void addNewSibling() throws NoItemSelected, ItemIsParent {
+        log.debug("Adding new sibling");
         final Question selected = getSelectedParent();
         addNewItem(selected);
     }
 
     private void deleteItem() throws NoItemSelected, ItemIsParent, ChildNotFoundException {
+        log.debug("Deleting an item");
         final Question selected = getSelected();
         final Question parent = getSelectedParent();
         if (!parent.delete(selected)) {
@@ -62,11 +68,16 @@ public class QuestionActionListener implements ActionListener {
     }
 
     private void addNewItem(final Question question) {
-        question.addQuestion(Question.createNew());
+        final QuestionModel model = (QuestionModel) tree.getModel();
+        model.addChild(question, Question.createNew());
     }
 
     private Question getSelectedParent() throws NoItemSelected, ItemIsParent {
         final TreePath selectionPath = tree.getSelectionModel().getSelectionPath();
+        return getSelectedParent(selectionPath);
+    }
+
+    private Question getSelectedParent(final TreePath selectionPath) throws NoItemSelected, ItemIsParent {
         if (isNull(selectionPath)) {
             throw new NoItemSelected();
         }
