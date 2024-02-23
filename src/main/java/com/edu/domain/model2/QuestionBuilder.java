@@ -12,6 +12,8 @@ public final class QuestionBuilder {
     private String title;
     private Map<String, InputType> inputTypeMap;
 
+    private Question parent;
+
     private QuestionBuilder() {
     }
 
@@ -39,12 +41,18 @@ public final class QuestionBuilder {
         return this;
     }
 
+
+    public QuestionBuilder parent(final Question parent) {
+        this.parent = parent;
+        return this;
+    }
+
     public QuestionBuilder inputTypeMap(Map<String, InputType> inputTypeMap) {
         this.inputTypeMap = inputTypeMap;
         return this;
     }
 
     public Question build() {
-        return new Question(name, title, inputTypeMap, questions);
+        return new Question(name, title, inputTypeMap, questions, parent);
     }
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,7 +71,10 @@ public class QuestionActionListener implements ActionListener {
 
     private void addNewItem(final Question question) {
         final QuestionModel model = (QuestionModel) tree.getModel();
-        model.addChild(question, Question.createNew());
+        final Question aNew = Question.createNew(question); // TODO Input Dialog
+        model.addChild(question, aNew);
+
+        expandToItem(aNew);
     }
 
     private Question getSelectedParent() throws NoItemSelected, ItemIsParent {
@@ -94,5 +98,13 @@ public class QuestionActionListener implements ActionListener {
         return (Question) Optional.ofNullable(tree.getSelectionModel().getSelectionPath())
                 .map(TreePath::getLastPathComponent)
                 .orElseThrow(NoItemSelected::new);
+    }
+
+    private void expandToItem(final Question question) {
+        final QuestionModel model = (QuestionModel) tree.getModel();
+        final TreeNode[] pathToRoot = model.getPathToRoot(question);
+        final TreePath treePath = new TreePath(pathToRoot);
+        tree.scrollPathToVisible(treePath);
+        tree.setSelectionPath(treePath);
     }
 }
