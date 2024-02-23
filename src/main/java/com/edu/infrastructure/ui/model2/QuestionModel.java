@@ -65,10 +65,18 @@ public class QuestionModel implements TreeModel {
         fireTreeStructureChanged(parent);
     }
 
+    public boolean removeChild(final Question parent, final Question children) {
+        final boolean removed = parent.remove(children);
+        if (removed) {
+            fireTreeStructureChanged(parent);
+        }
+        return removed;
+    }
+
 
     protected void fireTreeStructureChanged(final Question parent) {
         final TreeModelEvent event = new TreeModelEvent(this, new Object[]{parent});
-        for (TreeModelListener listener : listenerList.getListeners(TreeModelListener.class)) {
+        for (final TreeModelListener listener : listenerList.getListeners(TreeModelListener.class)) {
             listener.treeStructureChanged(event);
         }
     }

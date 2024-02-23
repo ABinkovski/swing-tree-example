@@ -62,7 +62,8 @@ public class QuestionActionListener implements ActionListener {
         log.debug("Deleting an item");
         final Question selected = getSelected();
         final Question parent = getSelectedParent();
-        if (!parent.delete(selected)) {
+        final QuestionModel model = (QuestionModel) tree.getModel();
+        if (!model.removeChild(parent, selected)) {
             throw new ChildNotFoundException(parent, selected);
         }
     }

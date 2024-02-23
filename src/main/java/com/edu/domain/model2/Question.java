@@ -80,8 +80,7 @@ public class Question {
         return String.format("%s: %s", name, title);
     }
 
-    @Deprecated
-    public boolean delete(final Question question) {
+    public boolean remove(final Question question) {
         return children.values().remove(question);
     }
 
