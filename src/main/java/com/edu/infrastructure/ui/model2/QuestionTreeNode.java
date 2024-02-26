@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.tree.TreeNode;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -19,7 +20,7 @@ import static java.util.Objects.nonNull;
 
 @Slf4j
 @Setter
-public class QuestionTreeNode extends Question implements TreeNode {
+public class QuestionTreeNode extends Question implements TreeNode, Serializable {
 
     @Getter
     private QuestionTreeNode parent;
@@ -37,6 +38,11 @@ public class QuestionTreeNode extends Question implements TreeNode {
         populateChildren(children);
     }
 
+
+    public void insertChildren(final QuestionTreeNode child, final int position) {
+        // TODO implement insertion on index
+        addQuestion(child);
+    }
 
     public void populateChildren(final List<QuestionTreeNode> children) {
         if (nonNull(children)) {

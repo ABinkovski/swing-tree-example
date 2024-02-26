@@ -9,12 +9,13 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import java.io.Serializable;
 
 import static java.util.Optional.ofNullable;
 
 @Slf4j
 @NoArgsConstructor
-public class QuestionModel implements TreeModel {
+public class QuestionModel implements TreeModel, Serializable {
 
     private QuestionTreeNode root;
     private final EventListenerList listenerList = new EventListenerList();
@@ -63,6 +64,10 @@ public class QuestionModel implements TreeModel {
     @Override
     public void removeTreeModelListener(final TreeModelListener l) {
         listenerList.remove(TreeModelListener.class, l);
+    }
+
+    public void insertNodeInto(final QuestionTreeNode newChild, final QuestionTreeNode parent, final int index) {
+        parent.insertChildren(newChild, index);
     }
 
     public void addChild(final QuestionTreeNode parent, final QuestionTreeNode children) {

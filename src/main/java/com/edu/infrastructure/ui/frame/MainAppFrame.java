@@ -2,14 +2,16 @@ package com.edu.infrastructure.ui.frame;
 
 import com.edu.infrastructure.ui.model.QuestionActionListenerType;
 import com.edu.infrastructure.ui.model2.QuestionModel;
+import com.edu.infrastructure.ui.model2.dnd.TreeDragSource;
+import com.edu.infrastructure.ui.model2.dnd.TreeDropTarget;
 import com.edu.infrastructure.ui.util.JTreeUtils;
 import com.edu.infrastructure.ui.util.QuestionFormUtils;
 import com.edu.infrastructure.ui.util.WindowUtils;
 import com.edu.testdata.TestDataUtils;
 
 import javax.swing.*;
-import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
+import java.awt.dnd.DnDConstants;
 
 import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_CHILD;
 import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_SIBLING;
@@ -24,6 +26,9 @@ public class MainAppFrame extends JFrame {
     private JButton addChildButton;
     private JButton addSiblingButton;
     private JButton removeButton;
+
+    private TreeDragSource treeDragSource;
+    private TreeDropTarget treeDropTarget;
 
     public MainAppFrame(final String title) throws HeadlessException {
         super(title);
@@ -72,8 +77,10 @@ public class MainAppFrame extends JFrame {
     }
 
     private void initDragAndDropCloner(final JTree tree) {
-        tree.setDragEnabled(true);
-        tree.setDropMode(DropMode.ON_OR_INSERT);
-        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
+//        tree.setDragEnabled(true);
+//        tree.setDropMode(DropMode.ON_OR_INSERT);
+//        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
+        treeDragSource = new TreeDragSource(tree, DnDConstants.ACTION_COPY_OR_MOVE);
+        treeDropTarget = new TreeDropTarget(tree);
     }
 }
