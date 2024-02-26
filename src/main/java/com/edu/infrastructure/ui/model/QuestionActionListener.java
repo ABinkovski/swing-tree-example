@@ -3,8 +3,8 @@ package com.edu.infrastructure.ui.model;
 import com.edu.domain.exception.ChildNotFoundException;
 import com.edu.domain.exception.ItemIsParent;
 import com.edu.domain.exception.NoItemSelected;
-import com.edu.domain.model2.Question;
 import com.edu.infrastructure.ui.model2.QuestionModel;
+import com.edu.infrastructure.ui.model2.QuestionTreeNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,20 +49,20 @@ public class QuestionActionListener implements ActionListener {
 
     private void addNewChild() throws NoItemSelected {
         log.debug("Adding new child");
-        final Question selected = getSelected();
+        final QuestionTreeNode selected = getSelected();
         addNewItem(selected);
     }
 
     private void addNewSibling() throws NoItemSelected, ItemIsParent {
         log.debug("Adding new sibling");
-        final Question selected = getSelectedParent();
+        final QuestionTreeNode selected = getSelectedParent();
         addNewItem(selected);
     }
 
     private void deleteItem() throws NoItemSelected, ItemIsParent, ChildNotFoundException {
         log.debug("Deleting an item");
-        final Question selected = getSelected();
-        final Question parent = getSelectedParent();
+        final QuestionTreeNode selected = getSelected();
+        final QuestionTreeNode parent = getSelectedParent();
         final QuestionModel model = (QuestionModel) tree.getModel();
         if (!model.removeChild(parent, selected)) {
             throw new ChildNotFoundException(parent, selected);
@@ -70,20 +70,20 @@ public class QuestionActionListener implements ActionListener {
         expandToChild(parent);
     }
 
-    private void addNewItem(final Question question) {
+    private void addNewItem(final QuestionTreeNode question) {
         final QuestionModel model = (QuestionModel) tree.getModel();
-        final Question aNew = Question.createNew(question); // TODO Input Dialog
+        final QuestionTreeNode aNew = QuestionTreeNode.createNew(question); // TODO Input Dialog
         model.addChild(question, aNew);
 
         expandToItem(aNew);
     }
 
-    private Question getSelectedParent() throws NoItemSelected, ItemIsParent {
+    private QuestionTreeNode getSelectedParent() throws NoItemSelected, ItemIsParent {
         final TreePath selectionPath = tree.getSelectionModel().getSelectionPath();
         return getSelectedParent(selectionPath);
     }
 
-    private Question getSelectedParent(final TreePath selectionPath) throws NoItemSelected, ItemIsParent {
+    private QuestionTreeNode getSelectedParent(final TreePath selectionPath) throws NoItemSelected, ItemIsParent {
         if (isNull(selectionPath)) {
             throw new NoItemSelected();
         }
@@ -92,21 +92,21 @@ public class QuestionActionListener implements ActionListener {
             throw new ItemIsParent();
         }
 
-        return (Question) selectionPath.getPath()[parentIndex];
+        return (QuestionTreeNode) selectionPath.getPath()[parentIndex];
     }
 
-    private Question getSelected() throws NoItemSelected {
-        return (Question) Optional.ofNullable(tree.getSelectionModel().getSelectionPath())
+    private QuestionTreeNode getSelected() throws NoItemSelected {
+        return (QuestionTreeNode) Optional.ofNullable(tree.getSelectionModel().getSelectionPath())
                 .map(TreePath::getLastPathComponent)
                 .orElseThrow(NoItemSelected::new);
     }
 
-    private void expandToChild(final Question parent) {
-        final Question question = parent.getChildCount() > 0 ? parent.getChild(0) : parent;
+    private void expandToChild(final QuestionTreeNode parent) {
+        final QuestionTreeNode question = parent.getChildCount() > 0 ? parent.getChild(0) : parent;
         expandToItem(question);
     }
 
-    private void expandToItem(final Question question) {
+    private void expandToItem(final QuestionTreeNode question) {
         final QuestionModel model = (QuestionModel) tree.getModel();
         final TreeNode[] pathToRoot = question.getPath();
         final TreePath treePath = new TreePath(pathToRoot);

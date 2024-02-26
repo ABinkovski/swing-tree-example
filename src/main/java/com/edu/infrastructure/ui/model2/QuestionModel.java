@@ -16,11 +16,11 @@ import static java.util.Optional.ofNullable;
 @NoArgsConstructor
 public class QuestionModel implements TreeModel {
 
-    private Question root;
+    private QuestionTreeNode root;
     private final EventListenerList listenerList = new EventListenerList();
 
     public void setRoot(final Object root) {
-        this.root = (Question) root;
+        this.root = (QuestionTreeNode) root;
         ofNullable(this.root)
                 .ifPresent(this::fireTreeStructureChanged);
     }
@@ -32,27 +32,27 @@ public class QuestionModel implements TreeModel {
 
     @Override
     public Object getChild(final Object parent, final int index) {
-        return ((Question) parent).getChild(index);
+        return ((QuestionTreeNode) parent).getChild(index);
     }
 
     @Override
     public int getChildCount(final Object parent) {
-        return ((Question) parent).getChildCount();
+        return ((QuestionTreeNode) parent).getChildCount();
     }
 
     @Override
     public boolean isLeaf(final Object node) {
-        return ((Question) node).isLeaf();
+        return ((QuestionTreeNode) node).isLeaf();
     }
 
     @Override
     public void valueForPathChanged(final TreePath path, final Object newValue) {
-        fireTreeStructureChanged((Question) newValue);
+        fireTreeStructureChanged((QuestionTreeNode) newValue);
     }
 
     @Override
     public int getIndexOfChild(final Object parent, final Object child) {
-        return ((Question) parent).getIndexOfChild((Question) child);
+        return ((QuestionTreeNode) parent).getIndexOfChild((Question) child);
     }
 
     @Override
@@ -65,12 +65,12 @@ public class QuestionModel implements TreeModel {
         listenerList.remove(TreeModelListener.class, l);
     }
 
-    public void addChild(final Question parent, final Question children) {
+    public void addChild(final QuestionTreeNode parent, final QuestionTreeNode children) {
         parent.addQuestion(children);
         fireTreeStructureChanged(parent);
     }
 
-    public boolean removeChild(final Question parent, final Question children) {
+    public boolean removeChild(final QuestionTreeNode parent, final QuestionTreeNode children) {
         final boolean removed = parent.remove(children);
         if (removed) {
             fireTreeStructureChanged(parent);
@@ -78,7 +78,7 @@ public class QuestionModel implements TreeModel {
         return removed;
     }
 
-    protected void fireTreeStructureChanged(final Question parent) {
+    protected void fireTreeStructureChanged(final QuestionTreeNode parent) {
         log.debug("fireTreeStructureChanged for [{}]", parent.previewTitle());
 
         final TreeModelEvent event = new TreeModelEvent(this, new Object[]{parent});

@@ -1,6 +1,6 @@
 package com.edu.infrastructure.ui.util;
 
-import com.edu.domain.model2.Question;
+import com.edu.infrastructure.ui.model2.QuestionTreeNode;
 import lombok.experimental.UtilityClass;
 
 import javax.swing.*;
@@ -14,15 +14,15 @@ public class JTreeUtils {
     public static void expand(final JTree jTree) {
         IntStream.rangeClosed(0, jTree.getRowCount())
                 .forEach(jTree::expandRow);
-        final Question root = (Question) jTree.getModel().getRoot();
+        final QuestionTreeNode root = (QuestionTreeNode) jTree.getModel().getRoot();
         expand(root, jTree);
     }
 
-    private static void expand(final Question node, final JTree jTree) {
+    private static void expand(final QuestionTreeNode node, final JTree jTree) {
         jTree.expandPath(new TreePath(node.getPath()));
 
         Collections.list(node.children())
-                .forEach(children -> expand((Question) children, jTree));
+                .forEach(children -> expand((QuestionTreeNode) children, jTree));
     }
 
 }
