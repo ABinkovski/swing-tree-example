@@ -16,8 +16,22 @@ public class DetailNodePanel extends JPanel {
 
     private final Map<DetailPanelElement, Component> formElements;
 
+    private JPanel elementsPanel;
+    private JPanel buttonPanel;
+
+    private JButton saveButton;
+
     public DetailNodePanel() {
         formElements = new LinkedHashMap<>();
+        elementsPanel = new JPanel();
+        buttonPanel = new JPanel();
+        saveButton = (JButton) buttonPanel.add(new JButton("Save"));
+        saveButton.setEnabled(false);
+
+        setLayout(new GridLayout(2, 1));
+        add(elementsPanel);
+        add(buttonPanel);
+
         setPreferredSize(new Dimension(300, 0));
     }
 
@@ -43,18 +57,18 @@ public class DetailNodePanel extends JPanel {
 
     private void refillFormElements() {
         removeAllElementsFromForm();
-        setLayout(new GridLayout(formElements.size(), 2));
+        elementsPanel.setLayout(new GridLayout(formElements.size(), 2));
         formElements.forEach((element, component) -> {
-            add(new JLabel(element.getLabel()));
-            add(component);
+            elementsPanel.add(new JLabel(element.getLabel()));
+            elementsPanel.add(component);
         });
 
         getRootPane().revalidate();
     }
 
     private void removeAllElementsFromForm() {
-        Stream.of(getComponents())
-                .forEach(this::remove);
+        Stream.of(elementsPanel.getComponents())
+                .forEach(elementsPanel::remove);
     }
 
     public void setText(final DetailPanelElement element, final String value) {
