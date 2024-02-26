@@ -68,6 +68,7 @@ public class QuestionModel implements TreeModel, Serializable {
 
     public void insertNodeInto(final QuestionTreeNode newChild, final QuestionTreeNode parent, final int index) {
         parent.insertChildren(newChild, index);
+        fireTreeStructureChanged(parent);
     }
 
     public void addChild(final QuestionTreeNode parent, final QuestionTreeNode children) {
