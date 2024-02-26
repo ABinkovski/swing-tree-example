@@ -128,7 +128,7 @@ public class QuestionTreeNode extends Question implements TreeNode {
 
         Collections.reverse(objectPath);
 
-        log.debug("getPathToRoot for {}, found: {}", this, StringUtils.join(objectPath, " -> "));
+        log.debug("getPathToRoot for [{}], found: [{}]", this, StringUtils.join(objectPath, " -> "));
 
         return objectPath.toArray(TreeNode[]::new);
     }
