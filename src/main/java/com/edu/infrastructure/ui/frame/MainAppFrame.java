@@ -1,13 +1,16 @@
 package com.edu.infrastructure.ui.frame;
 
 import com.edu.infrastructure.ui.model.QuestionActionListenerType;
+import com.edu.infrastructure.ui.model2.DetailNodePanel;
 import com.edu.infrastructure.ui.model2.QuestionModel;
+import com.edu.infrastructure.ui.model2.TreeQuestionSelectionListener;
 import com.edu.infrastructure.ui.model2.dnd.TreeDragSource;
 import com.edu.infrastructure.ui.model2.dnd.TreeDropTarget;
 import com.edu.infrastructure.ui.util.JTreeUtils;
 import com.edu.infrastructure.ui.util.QuestionFormUtils;
 import com.edu.infrastructure.ui.util.WindowUtils;
 import com.edu.testdata.TestDataUtils;
+import lombok.NonNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +24,7 @@ public class MainAppFrame extends JFrame {
 
     private final JTree jTree;
 
-    private final JPanel actionPanel;
+    private final DetailNodePanel detailPanel;
 
     private JButton addChildButton;
     private JButton addSiblingButton;
@@ -33,8 +36,8 @@ public class MainAppFrame extends JFrame {
     public MainAppFrame(final String title) throws HeadlessException {
         super(title);
 
-        add(new JScrollPane(jTree = initTree()), BorderLayout.CENTER);
-        add(actionPanel = initActionPanel(), BorderLayout.EAST);
+        add(new JScrollPane(detailPanel = detailPanel()), BorderLayout.EAST);
+        add(new JScrollPane(jTree = initTree(detailPanel)), BorderLayout.CENTER);
         add(initButtons(), BorderLayout.SOUTH);
 
         pack();
@@ -60,10 +63,12 @@ public class MainAppFrame extends JFrame {
         return panel;
     }
 
-    private JTree initTree() {
+    private JTree initTree(@NonNull final DetailNodePanel detailPanel) {
         final QuestionModel questionModel = new QuestionModel();
         questionModel.setRoot(TestDataUtils.getTestQuestionModel());
         final JTree tree = new JTree(questionModel);
+
+        tree.addTreeSelectionListener(new TreeQuestionSelectionListener(detailPanel));
 
         initDragAndDropCloner(tree);
 
@@ -72,8 +77,8 @@ public class MainAppFrame extends JFrame {
         return tree;
     }
 
-    private JPanel initActionPanel() {
-        return new JPanel();
+    private DetailNodePanel detailPanel() {
+        return new DetailNodePanel();
     }
 
     private void initDragAndDropCloner(final JTree tree) {
