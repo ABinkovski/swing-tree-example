@@ -19,10 +19,10 @@ import java.util.UUID;
 import static java.util.Objects.nonNull;
 
 @Slf4j
-@Getter
 @Setter
 public class QuestionTreeNode extends Question implements TreeNode {
 
+    @Getter
     private QuestionTreeNode parent;
     private Map<UUID, QuestionTreeNode> children = new LinkedHashMap<>();
 
@@ -79,12 +79,12 @@ public class QuestionTreeNode extends Question implements TreeNode {
         return -1;
     }
 
-    private List<QuestionTreeNode> getChildrenList() {
+    public List<QuestionTreeNode> getChildrenList() {
         return new ArrayList<>(children.values()); // TODO double check if order is kept properly
     }
 
     public String previewTitle() {
-        return String.format("%s: %s", getName(), getTitle());
+        return String.format("%s: %s: %s", getId(), getName(), getTitle());
     }
 
     public boolean remove(final QuestionTreeNode question) {

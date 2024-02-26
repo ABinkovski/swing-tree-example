@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static java.util.Arrays.asList;
+import static java.util.Objects.nonNull;
 
 public final class QuestionTreeNodeBuilder {
     private UUID id;
@@ -67,7 +68,9 @@ public final class QuestionTreeNodeBuilder {
 
     public QuestionTreeNode build() {
         final QuestionTreeNode questionTreeNode = new QuestionTreeNode(name, title, inputTypeMap, children, parent);
-        questionTreeNode.setId(id);
+        if (nonNull(id)) {
+            questionTreeNode.setId(id);
+        }
         questionTreeNode.setRule(rule);
         return questionTreeNode;
     }
