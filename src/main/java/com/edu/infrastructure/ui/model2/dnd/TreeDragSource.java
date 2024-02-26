@@ -83,7 +83,7 @@ public class TreeDragSource implements DragSourceListener, DragGestureListener {
 
     @Override
     public void dragDropEnd(final DragSourceDropEvent dragSourceDropEvent) {
-        log.info("DropAction: {}", dragSourceDropEvent.getDropAction());
+        log.info("dragDropEnd: {}", dragSourceDropEvent.getDropAction());
         if (dragSourceDropEvent.getDropSuccess()) {
             // Remove old node if it is moving instead of cloning
             if (!clonableNodes) {

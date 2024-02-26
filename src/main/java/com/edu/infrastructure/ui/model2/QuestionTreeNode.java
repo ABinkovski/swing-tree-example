@@ -58,7 +58,7 @@ public class QuestionTreeNode extends Question implements TreeNode, Serializable
     }
 
     public void addQuestion(final QuestionTreeNode question) {
-        question.setParent(this); // TODO possibly should be cloned
+        question.setParent(this);
         children.put(question.getId(), question);
     }
 
@@ -158,8 +158,9 @@ public class QuestionTreeNode extends Question implements TreeNode, Serializable
                 .title(getTitle())
                 .inputTypeMap(new LinkedHashMap<>(getInputTypeMap()))
                 .rule(getRule())
-                .parent(getParent()) // to be rewritten
-                .children(getChildrenList().stream().map(QuestionTreeNode::clone).collect(Collectors.toList()))
+                .parent(getParent()) // to be rewritten on adding to child list
+                .children(getChildrenList().stream()
+                        .map(QuestionTreeNode::clone).collect(Collectors.toList()))
                 .build();
     }
 }
