@@ -25,12 +25,12 @@ public final class QuestionTreeNodeBuilder {
         return new QuestionTreeNodeBuilder();
     }
 
-    public QuestionTreeNodeBuilder id(UUID id) {
+    public QuestionTreeNodeBuilder id(final UUID id) {
         this.id = id;
         return this;
     }
 
-    public QuestionTreeNodeBuilder rule(String rule) {
+    public QuestionTreeNodeBuilder rule(final String rule) {
         this.rule = rule;
         return this;
     }
@@ -45,28 +45,28 @@ public final class QuestionTreeNodeBuilder {
         return this;
     }
 
-    public QuestionTreeNodeBuilder name(String name) {
+    public QuestionTreeNodeBuilder name(final String name) {
         this.name = name;
         return this;
     }
 
-    public QuestionTreeNodeBuilder title(String title) {
+    public QuestionTreeNodeBuilder title(final String title) {
         this.title = title;
         return this;
     }
 
-    public QuestionTreeNodeBuilder inputTypeMap(Map<String, InputType> inputTypeMap) {
+    public QuestionTreeNodeBuilder inputTypeMap(final Map<String, InputType> inputTypeMap) {
         this.inputTypeMap = inputTypeMap;
         return this;
     }
 
-    public QuestionTreeNodeBuilder parent(QuestionTreeNode parent) {
+    public QuestionTreeNodeBuilder parent(final QuestionTreeNode parent) {
         this.parent = parent;
         return this;
     }
 
     public QuestionTreeNode build() {
-        QuestionTreeNode questionTreeNode = new QuestionTreeNode(name, title, inputTypeMap, children, parent);
+        final QuestionTreeNode questionTreeNode = new QuestionTreeNode(name, title, inputTypeMap, children, parent);
         questionTreeNode.setId(id);
         questionTreeNode.setRule(rule);
         return questionTreeNode;

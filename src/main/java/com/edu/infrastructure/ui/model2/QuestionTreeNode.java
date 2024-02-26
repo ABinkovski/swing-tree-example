@@ -29,19 +29,19 @@ public class QuestionTreeNode extends Question implements TreeNode {
     public QuestionTreeNode(final String name,
                             final String title,
                             final Map<String, InputType> inputTypeMap,
-                            final List<QuestionTreeNode> questions,
+                            final List<QuestionTreeNode> children,
                             final QuestionTreeNode parent
     ) {
         super(name, title);
         this.parent = parent;
         populateInputTypeMap(inputTypeMap);
-        populateQuestions(questions);
+        populateChildren(children);
     }
 
 
-    public void populateQuestions(final List<QuestionTreeNode> questions) {
-        if (nonNull(questions)) {
-            questions.forEach(this::addQuestion);
+    public void populateChildren(final List<QuestionTreeNode> children) {
+        if (nonNull(children)) {
+            children.forEach(this::addQuestion);
         }
     }
 
@@ -52,6 +52,7 @@ public class QuestionTreeNode extends Question implements TreeNode {
     }
 
     public void addQuestion(final QuestionTreeNode question) {
+        question.setParent(this); // TODO possibly should be cloned
         children.put(question.getId(), question);
     }
 
