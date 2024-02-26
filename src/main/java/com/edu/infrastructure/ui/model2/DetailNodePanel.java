@@ -3,6 +3,8 @@ package com.edu.infrastructure.ui.model2;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.util.LinkedHashMap;
@@ -27,6 +29,9 @@ public class DetailNodePanel extends JPanel {
         buttonPanel = new JPanel();
         saveButton = (JButton) buttonPanel.add(new JButton("Save"));
         saveButton.setEnabled(false);
+        saveButton.addActionListener(event -> {
+            // TODO implement save changes
+        });
 
         setLayout(new GridLayout(2, 1));
         add(elementsPanel);
@@ -52,6 +57,23 @@ public class DetailNodePanel extends JPanel {
     private void addTextField(final DetailPanelElement element, final String value) {
         final JTextField textField = new JTextField(value);
         textField.setEditable(element.isEditable());
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                saveButton.setEnabled(true);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                saveButton.setEnabled(true);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                saveButton.setEnabled(true);
+            }
+        });
+
         formElements.put(element, textField);
     }
 
