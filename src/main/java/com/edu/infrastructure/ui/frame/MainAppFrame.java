@@ -1,7 +1,6 @@
 package com.edu.infrastructure.ui.frame;
 
 import com.edu.infrastructure.ui.model.QuestionActionListenerType;
-import com.edu.infrastructure.ui.model2.QueryTransferHandler;
 import com.edu.infrastructure.ui.model2.QuestionModel;
 import com.edu.infrastructure.ui.util.JTreeUtils;
 import com.edu.infrastructure.ui.util.QuestionFormUtils;
@@ -75,7 +74,6 @@ public class MainAppFrame extends JFrame {
     private void initDragAndDropCloner(final JTree tree) {
         tree.setDragEnabled(true);
         tree.setDropMode(DropMode.ON_OR_INSERT);
-        tree.setTransferHandler(new QueryTransferHandler());
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
     }
 }

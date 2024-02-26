@@ -5,13 +5,12 @@ import com.edu.domain.model2.InputType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 
 public final class QuestionTreeNodeBuilder {
-    private UUID id;
+    private String id;
     private String rule;
     private List<QuestionTreeNode> children;
     private String name;
@@ -26,7 +25,7 @@ public final class QuestionTreeNodeBuilder {
         return new QuestionTreeNodeBuilder();
     }
 
-    public QuestionTreeNodeBuilder id(final UUID id) {
+    public QuestionTreeNodeBuilder id(final String id) {
         this.id = id;
         return this;
     }

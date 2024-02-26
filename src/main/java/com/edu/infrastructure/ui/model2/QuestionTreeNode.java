@@ -14,7 +14,6 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import static java.util.Objects.nonNull;
 
@@ -24,7 +23,7 @@ public class QuestionTreeNode extends Question implements TreeNode {
 
     @Getter
     private QuestionTreeNode parent;
-    private Map<UUID, QuestionTreeNode> children = new LinkedHashMap<>();
+    private Map<String, QuestionTreeNode> children = new LinkedHashMap<>();
 
     public QuestionTreeNode(final String name,
                             final String title,
@@ -84,7 +83,7 @@ public class QuestionTreeNode extends Question implements TreeNode {
     }
 
     public String previewTitle() {
-        return String.format("%s: %s: %s", getId(), getName(), getTitle());
+        return String.format("[%s] %s: %s", getId(), getName(), getTitle());
     }
 
     public boolean remove(final QuestionTreeNode question) {
