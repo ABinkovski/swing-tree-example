@@ -2,6 +2,7 @@ package com.edu.infrastructure.ui.model2.dnd;
 
 import com.edu.infrastructure.ui.model2.QuestionModel;
 import com.edu.infrastructure.ui.model2.QuestionTreeNode;
+import com.edu.infrastructure.ui.util.JTreeUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -69,6 +70,8 @@ public class TreeDropTarget implements DropTargetListener {
                     final QuestionModel model = (QuestionModel) tree.getModel();
                     model.insertNodeInto(treeNode.clone(), parent, 0);
                     dropTargetDropEvent.dropComplete(true);
+
+                    JTreeUtils.expand(tree);
                 }
             }
 
