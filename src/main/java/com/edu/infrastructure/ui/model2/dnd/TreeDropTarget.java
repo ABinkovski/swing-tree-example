@@ -67,7 +67,7 @@ public class TreeDropTarget implements DropTargetListener {
                     final TreePath treePath = (TreePath) transferable.getTransferData(flavor);
                     final QuestionTreeNode treeNode = (QuestionTreeNode) treePath.getLastPathComponent();
                     final QuestionModel model = (QuestionModel) tree.getModel();
-                    model.insertNodeInto(treeNode, parent, 0);
+                    model.insertNodeInto(treeNode.clone(), parent, 0);
                     dropTargetDropEvent.dropComplete(true);
                 }
             }

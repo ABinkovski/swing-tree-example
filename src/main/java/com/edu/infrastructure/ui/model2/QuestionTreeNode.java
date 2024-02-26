@@ -15,12 +15,13 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
 
 @Slf4j
 @Setter
-public class QuestionTreeNode extends Question implements TreeNode, Serializable {
+public class QuestionTreeNode extends Question implements TreeNode, Serializable, Cloneable {
 
     @Getter
     private QuestionTreeNode parent;
@@ -88,7 +89,7 @@ public class QuestionTreeNode extends Question implements TreeNode, Serializable
         return new ArrayList<>(children.values()); // TODO double check if order is kept properly
     }
 
-    public String previewTitle() {
+    public String getPreviewTitle() {
         return String.format("[%s] %s: %s", getId(), getName(), getTitle());
     }
 
@@ -98,7 +99,7 @@ public class QuestionTreeNode extends Question implements TreeNode, Serializable
 
     @Override
     public String toString() {
-        return previewTitle();
+        return getPreviewTitle();
     }
 
     @Override
@@ -146,5 +147,19 @@ public class QuestionTreeNode extends Question implements TreeNode, Serializable
 
     public static QuestionTreeNode createNew(final QuestionTreeNode parent) {
         return QuestionTreeNode.builder().parent(parent).build();
+    }
+
+    @Override
+    public QuestionTreeNode clone() {
+        log.debug("Cloning: {}", this.getPreviewTitle());
+        return builder()
+                .id(generateId())
+                .name(getName())
+                .title(getTitle())
+                .inputTypeMap(new LinkedHashMap<>(getInputTypeMap()))
+                .rule(getRule())
+                .parent(getParent()) // to be rewritten
+                .children(getChildrenList().stream().map(QuestionTreeNode::clone).collect(Collectors.toList()))
+                .build();
     }
 }

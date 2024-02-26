@@ -84,7 +84,7 @@ public class QuestionModel implements TreeModel, Serializable {
     }
 
     protected void fireTreeStructureChanged(final QuestionTreeNode parent) {
-        log.debug("fireTreeStructureChanged for [{}]", parent.previewTitle());
+        log.debug("fireTreeStructureChanged for [{}]", parent.getPreviewTitle());
 
         final TreeModelEvent event = new TreeModelEvent(this, new Object[]{parent});
         for (final TreeModelListener listener : listenerList.getListeners(TreeModelListener.class)) {
