@@ -48,6 +48,8 @@ public class DetailNodePanel extends JPanel {
             add(new JLabel(element.getLabel()));
             add(component);
         });
+
+        getRootPane().revalidate();
     }
 
     private void removeAllElementsFromForm() {
