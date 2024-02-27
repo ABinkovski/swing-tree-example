@@ -8,7 +8,8 @@ import com.edu.infrastructure.ui.model2.QuestionTreeNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
+import javax.swing.JTree;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;

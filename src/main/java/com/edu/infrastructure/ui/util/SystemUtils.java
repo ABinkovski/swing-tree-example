@@ -2,7 +2,7 @@ package com.edu.infrastructure.ui.util;
 
 import lombok.experimental.UtilityClass;
 
-import java.awt.*;
+import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

@@ -2,8 +2,10 @@ package com.edu.infrastructure.ui.util;
 
 import lombok.Builder;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
 
 import static com.edu.infrastructure.ui.util.WindowUtils.fillInstance;
 import static java.util.Objects.nonNull;

@@ -2,8 +2,16 @@ package com.edu.infrastructure.ui.util;
 
 import lombok.experimental.UtilityClass;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
 import java.util.Arrays;

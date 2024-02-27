@@ -2,7 +2,7 @@ package com.edu.infrastructure.ui;
 
 import com.edu.infrastructure.ui.frame.MainAppFrame;
 
-import java.awt.*;
+import java.awt.EventQueue;
 
 public class SwingTreeApp {
 

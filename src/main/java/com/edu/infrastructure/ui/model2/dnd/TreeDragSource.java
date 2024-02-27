@@ -3,7 +3,7 @@ package com.edu.infrastructure.ui.model2.dnd;
 import com.edu.infrastructure.ui.model2.QuestionTreeNode;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.swing.*;
+import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 import java.awt.dnd.DragGestureEvent;
 import java.awt.dnd.DragGestureListener;

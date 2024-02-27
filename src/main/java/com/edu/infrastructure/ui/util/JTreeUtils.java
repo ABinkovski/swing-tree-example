@@ -3,7 +3,7 @@ package com.edu.infrastructure.ui.util;
 import com.edu.infrastructure.ui.model2.QuestionTreeNode;
 import lombok.experimental.UtilityClass;
 
-import javax.swing.*;
+import javax.swing.JTree;
 import javax.swing.tree.TreePath;
 import java.util.Collections;
 import java.util.stream.IntStream;

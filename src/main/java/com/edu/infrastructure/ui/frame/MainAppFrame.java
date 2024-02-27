@@ -12,8 +12,14 @@ import com.edu.infrastructure.ui.util.WindowUtils;
 import com.edu.testdata.TestDataUtils;
 import lombok.NonNull;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.WindowConstants;
+import java.awt.BorderLayout;
+import java.awt.HeadlessException;
 import java.awt.dnd.DnDConstants;
 
 import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_CHILD;

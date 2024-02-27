@@ -3,7 +3,7 @@ package com.edu.infrastructure.ui.model2;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 
 @Getter
 @RequiredArgsConstructor

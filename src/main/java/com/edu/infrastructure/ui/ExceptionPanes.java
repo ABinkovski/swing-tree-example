@@ -2,8 +2,8 @@ package com.edu.infrastructure.ui;
 
 import lombok.experimental.UtilityClass;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JOptionPane;
+import java.awt.Component;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 

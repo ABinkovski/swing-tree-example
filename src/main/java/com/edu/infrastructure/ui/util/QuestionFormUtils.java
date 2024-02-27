@@ -4,7 +4,8 @@ import com.edu.infrastructure.ui.model.QuestionActionListener;
 import com.edu.infrastructure.ui.model.QuestionActionListenerType;
 import lombok.experimental.UtilityClass;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JTree;
 
 @UtilityClass
 public class QuestionFormUtils {
