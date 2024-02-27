@@ -1,4 +1,4 @@
-package com.edu.infrastructure.ui;
+package com.edu.infrastructure.ui.exception;
 
 import lombok.experimental.UtilityClass;
 

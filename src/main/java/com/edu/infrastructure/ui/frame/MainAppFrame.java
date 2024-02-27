@@ -25,6 +25,7 @@ import java.awt.dnd.DnDConstants;
 import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_CHILD;
 import static com.edu.infrastructure.ui.model.QuestionActionListenerType.ADD_SIBLING;
 import static com.edu.infrastructure.ui.model.QuestionActionListenerType.DELETE;
+import static com.edu.infrastructure.ui.model.QuestionActionListenerType.EXPAND_ALL;
 
 public class MainAppFrame extends JFrame {
 
@@ -35,6 +36,7 @@ public class MainAppFrame extends JFrame {
     private JButton addChildButton;
     private JButton addSiblingButton;
     private JButton removeButton;
+    private JButton expandAll;
 
     private TreeDragSource treeDragSource;
     private TreeDropTarget treeDropTarget;
@@ -65,6 +67,7 @@ public class MainAppFrame extends JFrame {
         panel.add(addChildButton = createButton(ADD_CHILD));
         panel.add(addSiblingButton = createButton(ADD_SIBLING));
         panel.add(removeButton = createButton(DELETE));
+        panel.add(expandAll = createButton(EXPAND_ALL));
 
         return panel;
     }

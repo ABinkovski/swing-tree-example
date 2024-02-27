@@ -1,7 +1,7 @@
 package com.edu.infrastructure.ui.model2;
 
 import com.edu.domain.exception.EmptyTextException;
-import com.edu.infrastructure.ui.ExceptionPanes;
+import com.edu.infrastructure.ui.exception.ExceptionPanes;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 

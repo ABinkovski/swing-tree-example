@@ -5,6 +5,7 @@ import com.edu.domain.exception.ItemIsParent;
 import com.edu.domain.exception.NoItemSelected;
 import com.edu.infrastructure.ui.model2.QuestionModel;
 import com.edu.infrastructure.ui.model2.QuestionTreeNode;
+import com.edu.infrastructure.ui.util.JTreeUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +41,9 @@ public class QuestionActionListener implements ActionListener {
                     deleteItem();
                     break;
 
+                case EXPAND_ALL:
+                    JTreeUtils.expand(tree);
+                    break;
                 default:
                     throw new UnsupportedOperationException(listenerType.name());
             }

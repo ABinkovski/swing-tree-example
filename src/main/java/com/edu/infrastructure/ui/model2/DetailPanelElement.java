@@ -12,6 +12,7 @@ public enum DetailPanelElement {
     NAME(JTextField.class, "Name", true, false),
     TITLE(JTextField.class, "Title", true, true),
     RULE(JTextField.class, "Rule", true, true);
+
     private final Class<?> aClass;
     private final String label;
     private final boolean editable;

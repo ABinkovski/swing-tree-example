@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum QuestionActionListenerType {
     ADD_CHILD("Add child"),
     ADD_SIBLING("Add Sibling"),
-    DELETE("Delete");
+    DELETE("Delete"),
+    EXPAND_ALL("Expand All");
 
     private final String title;
 }

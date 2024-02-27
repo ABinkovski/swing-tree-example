@@ -1,4 +1,4 @@
-package com.edu.infrastructure.ui;
+package com.edu;
 
 import com.edu.infrastructure.ui.frame.MainAppFrame;
 
