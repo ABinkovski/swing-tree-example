@@ -9,6 +9,8 @@ Simple Tree UI Editor as a practice example of working with Swing.
 * Adding/Removing items
 * Editing selected item
 
+<p/>Compiled executable jar versions could be found <a href="https://github.com/ABinkovski/swing-tree-example/releases">here</a>
+
 <p/> Example of app UI:
 
 ![appWindow.png](screenshots%2FappWindow.png)
