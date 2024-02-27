@@ -1,14 +1,21 @@
 package com.edu.infrastructure.ui.model2;
 
+import com.edu.domain.exception.EmptyTextException;
+import com.edu.infrastructure.ui.ExceptionPanes;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
@@ -29,9 +36,7 @@ public class DetailNodePanel extends JPanel {
         buttonPanel = new JPanel();
         saveButton = (JButton) buttonPanel.add(new JButton("Save"));
         saveButton.setEnabled(false);
-        saveButton.addActionListener(event -> {
-            // TODO implement save changes
-        });
+        saveButton.addActionListener(getSaveButtonListener());
 
         setLayout(new GridLayout(2, 1));
         add(elementsPanel);
@@ -57,22 +62,7 @@ public class DetailNodePanel extends JPanel {
     private void addTextField(final DetailPanelElement element, final String value) {
         final JTextField textField = new JTextField(value);
         textField.setEditable(element.isEditable());
-        textField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                saveButton.setEnabled(true);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                saveButton.setEnabled(true);
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                saveButton.setEnabled(true);
-            }
-        });
+        textField.getDocument().addDocumentListener(getTextChangeListener());
 
         formElements.put(element, textField);
     }
@@ -94,9 +84,69 @@ public class DetailNodePanel extends JPanel {
     }
 
     public void setText(final DetailPanelElement element, final String value) {
-        if (element.getAClass().isInstance(JTextComponent.class)) {
+        if (isTextComponent(element)) {
             final JTextComponent textComponent = (JTextComponent) formElements.get(element);
             textComponent.setText(value);
         }
+    }
+
+    private DocumentListener getTextChangeListener() {
+        return new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                saveButton.setEnabled(true);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                saveButton.setEnabled(true);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                saveButton.setEnabled(true);
+            }
+        };
+    }
+
+    private ActionListener getSaveButtonListener() {
+        return event -> {
+            try {
+                validateInput();
+
+                // TODO save changes
+            } catch (final EmptyTextException e) {
+                log.error(e.getMessage(), e);
+                ExceptionPanes.showValidationException(e, getRootPane());
+            }
+        };
+    }
+
+    private void validateInput() throws EmptyTextException {
+        final List<String> invalidInputs = formElements.entrySet()
+                .stream()
+                .filter(this::isTextComponent)
+                .filter(this::isEmptyNNTextComponent)
+                .map(Entry::getKey)
+                .map(DetailPanelElement::getLabel)
+                .collect(Collectors.toList());
+
+        if (!invalidInputs.isEmpty()) {
+            throw new EmptyTextException(invalidInputs);
+        }
+    }
+
+
+    private boolean isEmptyNNTextComponent(final Entry<DetailPanelElement, Component> entry) {
+        return !entry.getKey().isNullable() && StringUtils.isBlank(((JTextComponent) entry.getValue()).getText());
+    }
+
+    private boolean isTextComponent(final Entry<DetailPanelElement, Component> entry) {
+        return isTextComponent(entry.getKey());
+    }
+
+    private boolean isTextComponent(final DetailPanelElement element) {
+        // TODO find more elegant solution if possible
+        return JTextComponent.class.isAssignableFrom(element.getAClass());
     }
 }
