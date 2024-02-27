@@ -64,16 +64,16 @@ public class DetailNodePanel extends JPanel {
             cleanDetails();
         } else {
             fillDetails(questionTreeNode);
+            refillFormElements();
         }
-        refillFormElements();
     }
 
     private void cleanDetails() {
         log.debug("Clear all elements from details view");
         lastSelectedNode = null;
         saveButton.setVisible(false);
-        removeAllElementsFromForm();
         formElements.clear();
+        removeAllElementsFromForm();
     }
 
     private void fillDetails(final QuestionTreeNode questionTreeNode) {
@@ -105,13 +105,13 @@ public class DetailNodePanel extends JPanel {
             elementsPanel.add(new JLabel(element.getLabel()));
             elementsPanel.add(component);
         });
-
-        getRootPane().revalidate();
+        revalidate();
     }
 
     private void removeAllElementsFromForm() {
         Stream.of(elementsPanel.getComponents())
                 .forEach(elementsPanel::remove);
+        repaint();
     }
 
     private DocumentListener getTextChangeListener() {
