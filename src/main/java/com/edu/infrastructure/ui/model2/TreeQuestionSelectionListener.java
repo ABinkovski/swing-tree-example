@@ -18,6 +18,6 @@ public class TreeQuestionSelectionListener implements TreeSelectionListener {
         final QuestionTreeNode selected = (QuestionTreeNode) ((JTree) e.getSource()).getLastSelectedPathComponent();
         log.debug("Selected: {}", selected);
 
-        detailPanel.fillDetails(selected);
+        detailPanel.processNode(selected);
     }
 }

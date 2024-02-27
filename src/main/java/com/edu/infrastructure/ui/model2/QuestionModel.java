@@ -1,6 +1,7 @@
 package com.edu.infrastructure.ui.model2;
 
 import com.edu.domain.model2.Question;
+import com.edu.infrastructure.ui.service.NodeMappingService;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,7 +10,9 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import java.awt.Component;
 import java.io.Serializable;
+import java.util.Map;
 
 import static java.util.Optional.ofNullable;
 
@@ -84,6 +87,10 @@ public class QuestionModel implements TreeModel, Serializable {
         return removed;
     }
 
+    public void fireTreeStructureChanged() {
+        fireTreeStructureChanged(root);
+    }
+
     protected void fireTreeStructureChanged(final QuestionTreeNode parent) {
         log.debug("fireTreeStructureChanged for [{}]", parent.getPreviewTitle());
 
@@ -91,5 +98,10 @@ public class QuestionModel implements TreeModel, Serializable {
         for (final TreeModelListener listener : listenerList.getListeners(TreeModelListener.class)) {
             listener.treeStructureChanged(event);
         }
+    }
+
+    public void updateNode(final QuestionTreeNode oldValue, final Map<DetailPanelElement, Component> formElements) {
+        NodeMappingService.updateNode(oldValue, formElements);
+        fireTreeStructureChanged(oldValue);
     }
 }

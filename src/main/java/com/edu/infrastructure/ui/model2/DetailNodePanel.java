@@ -2,16 +2,18 @@ package com.edu.infrastructure.ui.model2;
 
 import com.edu.domain.exception.EmptyTextException;
 import com.edu.infrastructure.ui.exception.ExceptionPanes;
+import com.edu.infrastructure.ui.util.FormUtils;
+import com.edu.infrastructure.ui.util.JTreeUtils;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.JTextComponent;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -30,10 +32,15 @@ public class DetailNodePanel extends JPanel {
 
     private final Map<DetailPanelElement, Component> formElements;
 
+    @Setter
+    private JTree tree;
+
     private JPanel elementsPanel;
     private JPanel buttonPanel;
 
     private JButton saveButton;
+
+    private QuestionTreeNode lastSelectedNode;
 
     public DetailNodePanel() {
         formElements = new LinkedHashMap<>();
@@ -41,6 +48,7 @@ public class DetailNodePanel extends JPanel {
         buttonPanel = new JPanel();
         saveButton = (JButton) buttonPanel.add(new JButton("Save"));
         saveButton.setEnabled(false);
+        saveButton.setVisible(false);
         saveButton.addActionListener(getSaveButtonListener());
 
         setLayout(new GridLayout(2, 1));
@@ -50,18 +58,36 @@ public class DetailNodePanel extends JPanel {
         setPreferredSize(new Dimension(300, 0));
     }
 
-    public void fillDetails(final QuestionTreeNode questionTreeNode) {
+    public void processNode(final QuestionTreeNode questionTreeNode) {
         if (isNull(questionTreeNode)) {
             log.debug("Skipping: value is null");
+            cleanDetails();
         } else {
-            log.debug("Showing details for: {}", questionTreeNode.getPreviewTitle());
-            addTextField(DetailPanelElement.ID, questionTreeNode.getId());
-            addTextField(DetailPanelElement.NAME, questionTreeNode.getName());
-            addTextField(DetailPanelElement.TITLE, questionTreeNode.getTitle());
-            addTextField(DetailPanelElement.RULE, questionTreeNode.getRule());
-
-            refillFormElements();
+            fillDetails(questionTreeNode);
         }
+        refillFormElements();
+    }
+
+    private void cleanDetails() {
+        log.debug("Clear all elements from details view");
+        lastSelectedNode = null;
+        saveButton.setVisible(false);
+        removeAllElementsFromForm();
+        formElements.clear();
+    }
+
+    private void fillDetails(final QuestionTreeNode questionTreeNode) {
+        lastSelectedNode = questionTreeNode;
+
+        log.debug("Showing details for: {}", questionTreeNode.getPreviewTitle());
+
+        saveButton.setVisible(true);
+        saveButton.setEnabled(false);
+
+        addTextField(DetailPanelElement.ID, questionTreeNode.getId());
+        addTextField(DetailPanelElement.NAME, questionTreeNode.getName());
+        addTextField(DetailPanelElement.TITLE, questionTreeNode.getTitle());
+        addTextField(DetailPanelElement.RULE, questionTreeNode.getRule());
     }
 
     private void addTextField(final DetailPanelElement element, final String value) {
@@ -88,27 +114,20 @@ public class DetailNodePanel extends JPanel {
                 .forEach(elementsPanel::remove);
     }
 
-    public void setText(final DetailPanelElement element, final String value) {
-        if (isTextComponent(element)) {
-            final JTextComponent textComponent = (JTextComponent) formElements.get(element);
-            textComponent.setText(value);
-        }
-    }
-
     private DocumentListener getTextChangeListener() {
         return new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e) {
+            public void insertUpdate(final DocumentEvent e) {
                 saveButton.setEnabled(true);
             }
 
             @Override
-            public void removeUpdate(DocumentEvent e) {
+            public void removeUpdate(final DocumentEvent e) {
                 saveButton.setEnabled(true);
             }
 
             @Override
-            public void changedUpdate(DocumentEvent e) {
+            public void changedUpdate(final DocumentEvent e) {
                 saveButton.setEnabled(true);
             }
         };
@@ -118,8 +137,7 @@ public class DetailNodePanel extends JPanel {
         return event -> {
             try {
                 validateInput();
-
-                // TODO save changes
+                saveChanges();
             } catch (final EmptyTextException e) {
                 log.error(e.getMessage(), e);
                 ExceptionPanes.showValidationException(e, getRootPane());
@@ -130,8 +148,8 @@ public class DetailNodePanel extends JPanel {
     private void validateInput() throws EmptyTextException {
         final List<String> invalidInputs = formElements.entrySet()
                 .stream()
-                .filter(this::isTextComponent)
-                .filter(this::isEmptyNNTextComponent)
+                .filter(FormUtils::isTextComponent)
+                .filter(FormUtils::isEmptyNNTextComponent)
                 .map(Entry::getKey)
                 .map(DetailPanelElement::getLabel)
                 .collect(Collectors.toList());
@@ -141,17 +159,12 @@ public class DetailNodePanel extends JPanel {
         }
     }
 
+    private void saveChanges() {
+        log.debug("Saving changes for {}", lastSelectedNode.getPreviewTitle());
 
-    private boolean isEmptyNNTextComponent(final Entry<DetailPanelElement, Component> entry) {
-        return !entry.getKey().isNullable() && StringUtils.isBlank(((JTextComponent) entry.getValue()).getText());
-    }
+        final QuestionModel model = (QuestionModel) tree.getModel();
+        model.updateNode(lastSelectedNode, formElements);
 
-    private boolean isTextComponent(final Entry<DetailPanelElement, Component> entry) {
-        return isTextComponent(entry.getKey());
-    }
-
-    private boolean isTextComponent(final DetailPanelElement element) {
-        // TODO find more elegant solution if possible
-        return JTextComponent.class.isAssignableFrom(element.getAClass());
+        JTreeUtils.expand(tree);
     }
 }

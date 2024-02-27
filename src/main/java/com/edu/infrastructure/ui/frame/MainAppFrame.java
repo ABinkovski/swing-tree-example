@@ -48,6 +48,8 @@ public class MainAppFrame extends JFrame {
         add(new JScrollPane(jTree = initTree(detailPanel)), BorderLayout.CENTER);
         add(initButtons(), BorderLayout.SOUTH);
 
+        detailPanel.setTree(jTree);
+
         pack();
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -91,9 +93,6 @@ public class MainAppFrame extends JFrame {
     }
 
     private void initDragAndDropCloner(final JTree tree) {
-//        tree.setDragEnabled(true);
-//        tree.setDropMode(DropMode.ON_OR_INSERT);
-//        tree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
         treeDragSource = new TreeDragSource(tree, DnDConstants.ACTION_COPY_OR_MOVE);
         treeDropTarget = new TreeDropTarget(tree);
     }
